@@ -44,9 +44,11 @@
       touch-action: none; /* IE11 */
     }
 
-    [data-nqe-widget="storyForm"] {
+    body {
       -webkit-touch-callout: none; /* iOS Safari */
+
     }
+
   }
     
 
