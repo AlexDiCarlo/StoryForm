@@ -277,44 +277,68 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
             // Pause and Play on card //
 
             allCards.forEach(function(currentCard){
-                currentCard.addEventListener('click',(e) => {
-                    if (currentCard.classList.contains("mainImage")) {
-                        let video = currentCard.querySelector("video")
-                        if (active){
-                            if (video != undefined)  {video.pause()}
-                            startPauseButtonContainer.classList.remove("pause")
-                            clearInterval(interval);
-                            active = false;
-                        } else {
-                            if (video != undefined)  {video.play()}
-                            startPauseButtonContainer.classList.add("pause")
-                            interval = setInterval(() => { startAutoPlay()},100);
-                            active=true;
+
+                if (window.matchMedia("(min-width: 768px)").matches == true) {
+                    currentCard.addEventListener('click',(e) => {
+                        if (currentCard.classList.contains("mainImage")) {
+                            let video = currentCard.querySelector("video")
+                            if (active){
+                                if (video != undefined)  {video.pause()}
+                                startPauseButtonContainer.classList.remove("pause")
+                                clearInterval(interval);
+                                active = false;
+                            } else {
+                                if (video != undefined)  {video.play()}
+                                startPauseButtonContainer.classList.add("pause")
+                                interval = setInterval(() => { startAutoPlay()},100);
+                                active=true;
+                            }
                         }
-                    }
-                })
+                    })
+                }
 
+                if (window.matchMedia("(max-width: 767px)").matches == true) {
+                
+                    currentCard.addEventListener("touchstart", (event) => {
+                        if (currentCard.classList.contains("mainImage")) {
+                            let video = currentCard.querySelector("video")
+                            if (active){
+                                if (video != undefined)  {video.pause()}
+                                startPauseButtonContainer.classList.remove("pause")
+                                clearInterval(interval);
+                                active = false;
+                            }
+                        }           
+                    });
+                    
+                    currentCard.addEventListener("touchend", (event) => {
+                        if (currentCard.classList.contains("mainImage")) {
+                            let video = currentCard.querySelector("video")
+                            if (active == false){
+                                if (video != undefined)  {video.play()}
+                                startPauseButtonContainer.classList.add("pause")
+                                interval = setInterval(() => { startAutoPlay()},100);
+                                active = true;
+                            }
+                        } 
+                    });
 
-                 // HoverState, Drag, TouchStart, //
+                }
 
-                // currentCard.addEventListener("mouseover", function(){
-                //     //clearInterval(nextInterval)
-                //     //console.log("Interval Canceled")
-                // })
-                // currentCard.addEventListener("mouseout", function(e){
-                //     let currentCard = e.target.closest("[data-nqe-story-time]")
-                //     let currentCardTimer = currentCard.getAttribute("data-nqe-story-time")
-                //     //startAutoPlay("true", currentCardTimer)
-                //     //console.log("Interval Started")
-                // })
+                // HoverState, Drag, TouchStart, //
 
-                // currentCard.addEventListener("touchstart", (event) => {
-                //     clearInterval(interval)
-                //     });
-
-                // currentCard.addEventListener("touchend", (event) => {
-                //     autoClick()
-                // });
+               // currentCard.addEventListener("mouseover", function(){
+               //     //clearInterval(nextInterval)
+               //     //console.log("Interval Canceled")
+               // })
+               // currentCard.addEventListener("mouseout", function(e){
+               //     let currentCard = e.target.closest("[data-nqe-story-time]")
+               //     let currentCardTimer = currentCard.getAttribute("data-nqe-story-time")
+               //     //startAutoPlay("true", currentCardTimer)
+               //     //console.log("Interval Started")
+               // })
+            
+            
             })
 
             window.addEventListener("resize", function() {
