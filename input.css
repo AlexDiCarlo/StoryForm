@@ -43,11 +43,13 @@
       flex-basis: 100%;
       touch-action: none; /* IE11 */
       -webkit-user-select: none; /* Safari */
+      user-select: none; /* Standard */
     }
 
-    body {
+    body, img {
       -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Safari */
+      user-select: none; /* Standard */
     }
 
   }
