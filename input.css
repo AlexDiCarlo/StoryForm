@@ -45,8 +45,8 @@
       -webkit-user-select: none; /* Safari */
       user-select: none; /* Standard */
     }
-
-    body, img {
+    
+    img {
       -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Safari */
       user-select: none; /* Standard */
@@ -56,6 +56,8 @@
       user-select: none;
       -webkit-user-drag: none;
       -webkit-touch-callout: none;
+      
+      pointer-events:none;
     }
 
   }
