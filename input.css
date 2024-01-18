@@ -41,6 +41,7 @@
       flex-grow: 0;
       flex-shrink: 0;
       flex-basis: 100%;
+      -webkit-touch-callout: none; /* iOS Safari */
     }
   }
     

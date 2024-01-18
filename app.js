@@ -278,28 +278,9 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
 
             allCards.forEach(function(currentCard){
 
-                if (window.matchMedia("(min-width: 768px)").matches == true) {
-                    currentCard.addEventListener('click',(e) => {
-                        if (currentCard.classList.contains("mainImage")) {
-                            let video = currentCard.querySelector("video")
-                            if (active){
-                                if (video != undefined)  {video.pause()}
-                                startPauseButtonContainer.classList.remove("pause")
-                                clearInterval(interval);
-                                active = false;
-                            } else {
-                                if (video != undefined)  {video.play()}
-                                startPauseButtonContainer.classList.add("pause")
-                                interval = setInterval(() => { startAutoPlay()},100);
-                                active=true;
-                            }
-                        }
-                    })
-                }
-
-                if (window.matchMedia("(max-width: 767px)").matches == true) {
+                if (('ontouchstart' in window)) {
                 
-                    currentCard.addEventListener("touchstart", (event) => {
+                    currentCard.addEventListener("touchstart", (e) => {
                         if (currentCard.classList.contains("mainImage")) {
                             let video = currentCard.querySelector("video")
                             if (active){
@@ -311,18 +292,39 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                         }           
                     });
                     
-                    currentCard.addEventListener("touchend", (event) => {
+                    currentCard.addEventListener("touchend", (e) => {
+                
                         if (currentCard.classList.contains("mainImage")) {
                             let video = currentCard.querySelector("video")
                             if (active == false){
                                 if (video != undefined)  {video.play()}
                                 startPauseButtonContainer.classList.add("pause")
+                                clearInterval(interval);
                                 interval = setInterval(() => { startAutoPlay()},100);
                                 active = true;
                             }
                         } 
                     });
 
+                } else {
+
+                    currentCard.addEventListener('click',(e) => {
+                        if (currentCard.classList.contains("mainImage")) {
+                            let video = currentCard.querySelector("video")
+                            if (active){
+                                if (video != undefined)  {video.pause()}
+                                startPauseButtonContainer.classList.remove("pause")
+                                clearInterval(interval);
+                                active = false;
+                            } else {
+                                if (video != undefined)  {video.play()}
+                                startPauseButtonContainer.classList.add("pause")
+                                clearInterval(interval);
+                                interval = setInterval(() => { startAutoPlay()},100);
+                                active = true;
+                            }
+                        }
+                    });
                 }
 
                 // HoverState, Drag, TouchStart, //
