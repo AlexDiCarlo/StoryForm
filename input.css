@@ -31,6 +31,11 @@
     display: block !important;
   }
 
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
   
 
 
@@ -62,6 +67,7 @@
 
   }
     
+
 
 
 

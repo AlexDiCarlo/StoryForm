@@ -32,6 +32,13 @@ storyButtons.forEach(function (storyButton) {
 
 let active
 let interval
+let heights = []
+let widths = []
+let values = {
+    foundHeight : {},
+    foundWidth: {}
+}
+let resetValue
 
 let startStoryForm = function(storyContainer, status, autoplay = "true") {
     let container = storyContainer.querySelector("[data-nqe-story-container]")
@@ -79,16 +86,12 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
 
     // Using for test purposes //
 
+  
     let contentEqualizer = function() {
-        let heights = []
-        let widths = []
-        let values = {
-            foundHeight : {},
-            foundWidth: {}
-        }
+
         allCards.forEach(function(card){
-           heights.push(card.getBoundingClientRect().height)
-           widths.push(card.getBoundingClientRect().width)
+           heights.push(Math.floor(card.getBoundingClientRect().height * 100 ) / 100)
+           widths.push(Math.round(card.getBoundingClientRect().width * 100 ) / 100)
         })
         heights.forEach(function (height) {
             values.foundHeight[height] = (values.foundHeight[height] || 0) + 1;
@@ -115,6 +118,9 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                 newWidth = width
             }
           }
+
+
+          console.log(values)
 
           allCards.forEach(function(card){
             card.style.height = `${parseInt(newHeight)}px`
@@ -149,6 +155,13 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
             clearInterval(interval)
             buttonCounter = 0
             active = true
+            heights = []
+            widths = []
+            values = {
+                foundHeight : {},
+                foundWidth: {}
+            }
+
             allCards.forEach(function(card){
                 card.style.transform  = `unset`
                 let originalOrder = card.getAttribute("data-original-order")
