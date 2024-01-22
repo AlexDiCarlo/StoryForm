@@ -1,3 +1,26 @@
+let checkLocalStorage = function() {
+    if (localStorage.getItem("nqeStoryOrder") == null) {
+        localStorage.setItem("nqeStoryOrder", "{}")
+        return true
+    } else {
+        let storyOrder = JSON.parse(localStorage.getItem("nqeStoryOrder"))
+        let storyIcons = Array.from(document.querySelectorAll("[data-nqe-story-icon]"))
+        if (storyIcons.length !== Object.keys(storyOrder).length) {    
+            for (let id in storyOrder) {
+                let icon = document.querySelector(`[data-nqe-story-icon="${id}"]`)
+                icon.setAttribute("data-story-viewed", "true")
+                icon.style.order = storyOrder[id]
+            }
+        } else {
+            console.log("Checking")
+            localStorage.setItem("nqeStoryOrder", "{}")
+        }
+    }
+}
+
+checkLocalStorage()
+
+
 // Used for each story icon which will trigger the story container to show //
 let storyButtons = Array.from(document.querySelectorAll("[data-nqe-story-icon]"))
 storyButtons.forEach(function (storyButton) {
@@ -25,20 +48,30 @@ storyButtons.forEach(function (storyButton) {
     let nextIcon = currentIcon.nextElementSibling
     if (nextIcon != undefined && nextIcon.getAttribute("data-story-viewed") != "true" ) {
         nextIcon.click()
+    } else {
+        let allIcons = Array.from(currentIcon.parentNode.querySelectorAll("[data-nqe-story-icon]:not([data-story-viewed='true'])"))
+        
+        if (allIcons != undefined && allIcons.length > 0) {
+            for (let i = 0; i <= allIcons.length; i++) {
+                if (allIcons[i].getAttribute("data-story-viewed") != "true" ) {
+                    allIcons[i].click()
+                    break; 
+                }
+              }
+        }
     }
  }
 
-
-
+ let values = {
+    foundHeight : {},
+    foundWidth: {}
+} 
 let active
 let interval
 let heights = []
 let widths = []
-let values = {
-    foundHeight : {},
-    foundWidth: {}
-}
 let resetValue
+let iconCounter = 0
 
 let startStoryForm = function(storyContainer, status, autoplay = "true") {
     let container = storyContainer.querySelector("[data-nqe-story-container]")
@@ -123,9 +156,6 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                 newWidth = width
             }
           }
-
-
-          console.log(values)
 
           allCards.forEach(function(card){
             card.style.height = `${parseInt(newHeight)}px`
@@ -235,10 +265,12 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
 
             buttons.forEach(function(button){
                 let direction = button.getAttribute("data-nqe-story-button")
+                let currentStoryID = storyContainer.getAttribute("data-nqe-story-id")
                 button.addEventListener("click", function(e) {
                     let currentCard = this.closest("[data-card-order]")
                     let currentBarOriginalID = currentCard.getAttribute("data-original-order")
                     let currentProgressBar = progressBarContainer.querySelector(`[data-progess-order="${currentBarOriginalID}"]`)
+                    let currentIcon = document.querySelector(`[data-nqe-story-icon="${currentStoryID}"]`)
                     let video = currentCard.querySelector("video")
                     if (direction == "next" && !(buttonCounter >= items -1 )) {
                         buttonCounter += 1
@@ -267,6 +299,12 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                         interval = setInterval(() => { startAutoPlay()},100);
                         active = true;
                     } else {
+                        let newOrder = 100 + iconCounter
+                        currentIcon.style.order = `${newOrder.toString()}`
+                        let orderObject = JSON.parse(localStorage.getItem("nqeStoryOrder"))
+                        orderObject[`${currentStoryID.toString()}`] = `${newOrder.toString()}`
+                        localStorage.setItem("nqeStoryOrder", JSON.stringify(orderObject))
+                        iconCounter += 1
                         reset()
                         autoStory(storyContainer)
                         storyContainer.classList.add("hidden")
@@ -301,6 +339,12 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
             // Working //
             let exitButton = storyContainer.querySelector("[data-nqe-exitButton]")
             exitButton.addEventListener("click", function(){
+                let currentCard = container.querySelector(".mainImage")
+                let video = currentCard.querySelector("video")
+                if (video != undefined)  {
+                    video.currentTime = 0;
+                    video.pause();
+                }
                 reset()
                 storyContainer.classList.add("hidden")
                 storyContainer.classList.remove("nql-show-fast")
@@ -364,6 +408,11 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                         } else {
                             // Vertical swipe detected
                             if (diffY > 0) {
+                                let video = currentCard.querySelector("video")
+                                if (video != undefined)  {
+                                    video.currentTime = 0;
+                                    video.pause();
+                                }
                                 reset()
                                 storyContainer.classList.add("hidden")
                                 storyContainer.classList.remove("nql-show-fast")
