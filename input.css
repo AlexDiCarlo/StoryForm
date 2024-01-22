@@ -11,10 +11,14 @@
     }
   }
 
-  .nql-show {
-    animation: nqa-show 0.5s ease;
-    display: block !important;
+  @media only screen and (min-width: 768px) {
+    .nql-show {
+      animation: nqa-show 0.5s ease;
+      display: block !important;
+    }
   }
+
+
 
 
   @keyframes nqa-show-fast {
@@ -87,3 +91,24 @@
 }
 .progress > div {background-color:black;     width:0%;    height:4px;   transition:width 100ms linear; /* note this line */}
 
+
+
+
+/* Rotate Testing  */
+
+[data-nqe-story-container] {
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  transition: transform 1s;
+}
+
+[data-card-order] {
+  transform-style: preserve-3d;
+  position: absolute;
+  width: 100%!important;
+  height: 100%!important;
+  pointer-events: none;
+  top: 0;
+  bottom: 0;
+}
