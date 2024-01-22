@@ -392,22 +392,7 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                             }
                         }
                     });
-                }
-
-                // HoverState, Drag, TouchStart, //
-
-               // currentCard.addEventListener("mouseover", function(){
-               //     //clearInterval(nextInterval)
-               //     //console.log("Interval Canceled")
-               // })
-               // currentCard.addEventListener("mouseout", function(e){
-               //     let currentCard = e.target.closest("[data-nqe-story-time]")
-               //     let currentCardTimer = currentCard.getAttribute("data-nqe-story-time")
-               //     //startAutoPlay("true", currentCardTimer)
-               //     //console.log("Interval Started")
-               // })
-            
-            
+                }            
             })
 
             window.addEventListener("resize", function() {
