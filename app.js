@@ -338,28 +338,38 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                         } 
                     });
 
-                    let touchStartX = 0;
-                    let touchEndX = 0;
-
+                    let touchStartY;
+                    let touchEndY;
+                    let touchStartX;
+                    let touchEndX;
+                    
                     function handleTouchStart(e) {
-                        touchStartX = e.changedTouches[0].screenX;
+                        touchStartY = e.changedTouches[0].clientY;
+                        touchStartX = e.changedTouches[0].clientX;
                     }
-
+                    
                     function handleTouchEnd(e) {
-                        touchEndX = e.changedTouches[0].screenX;
-                    handleSwipeGesture();
+                        touchEndY = e.changedTouches[0].clientY;
+                        touchEndX = e.changedTouches[0].clientX;
+                        handleSwipeGesture();
                     }
-
+                    
                     function handleSwipeGesture() {
-                        if (touchEndX < touchStartX) {
-                            autoClick("next")
-                        }
-
-                        if (touchEndX > touchStartX) {
-                            autoClick("prev")
+                        let diffY = touchStartY - touchEndY;
+                        let diffX = touchStartX - touchEndX;
+                    
+                        if (Math.abs(diffX) > Math.abs(diffY)) {
+                            // Horizontal swipe detected
+                            diffX > 0 ? autoClick("next") : autoClick("prev")
+                        } else {
+                            // Vertical swipe detected
+                            if (diffY > 0) {
+                                reset()
+                                storyContainer.classList.add("hidden")
+                                storyContainer.classList.remove("nql-show-fast")
+                            }
                         }
                     }
-
                     currentCard.addEventListener('touchstart', handleTouchStart, false);        
                     currentCard.addEventListener('touchend', handleTouchEnd, false);
 
