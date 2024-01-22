@@ -70,14 +70,19 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
             currentCard.setAttribute('data-remaining-time',remaining);
             currentProgressBar.querySelector('div').style.width = (remaining/time)*100 + "%";
             if (remaining >= time){
-                autoClick()
+                autoClick("next")
             }
         }
     }
     // Auto Play Functions //
-    let autoClick = () => {
+    let autoClick = (direction) => {
+        let currentButton
         let currentCard = container.querySelector(".mainImage")
-        let currentButton = currentCard.querySelector('[data-nqe-story-button="next"]')
+        if (direction == "next") {
+            currentButton = currentCard.querySelector('[data-nqe-story-button="next"]')
+        } else {
+            currentButton = currentCard.querySelector('[data-nqe-story-button="prev"]')
+        }
         currentButton.click()
         if (currentCard.nextElementSibling != null) {
             startAutoPlay()
@@ -252,7 +257,15 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                         updateCardOrder(currentCard, direction, currentProgressBar)
                         updateOrder(buttonCounter, "prev")
                     } else if (direction == "prev" && buttonCounter == 0) {
-                        clearInterval(interval)
+                        if (video != undefined)  {
+                            video.currentTime = 0;
+                            video.play();
+                        }
+                        currentCard.setAttribute('data-remaining-time',"0");
+                        currentProgressBar.querySelector('div').style.width = (0)*100 + "%";
+                        clearInterval(interval);
+                        interval = setInterval(() => { startAutoPlay()},100);
+                        active = true;
                     } else {
                         reset()
                         autoStory(storyContainer)
@@ -268,6 +281,9 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
             // Working //
             let playButton = storyContainer.querySelector("[data-nqe-playButton]")
             playButton.addEventListener("click", function(){
+                let currentCard = container.querySelector(".mainImage")
+                let video = currentCard.querySelector("video") 
+                if (video != undefined)  {video.play()}
                 startPauseButtonContainer.classList.add("pause")
                 interval = setInterval(() => { startAutoPlay()},100);
                 active = true;
@@ -275,6 +291,9 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
             // Working //
             let pauseButton = storyContainer.querySelector("[data-nqe-pauseButton]")
             pauseButton.addEventListener("click", function(){
+                let currentCard = container.querySelector(".mainImage")
+                let video = currentCard.querySelector("video")
+                if (video != undefined)  {video.pause()}
                 startPauseButtonContainer.classList.remove("pause")
                 clearInterval(interval)
                 active = false;
@@ -318,6 +337,31 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                             }
                         } 
                     });
+
+                    let touchStartX = 0;
+                    let touchEndX = 0;
+
+                    function handleTouchStart(e) {
+                        touchStartX = e.changedTouches[0].screenX;
+                    }
+
+                    function handleTouchEnd(e) {
+                        touchEndX = e.changedTouches[0].screenX;
+                    handleSwipeGesture();
+                    }
+
+                    function handleSwipeGesture() {
+                        if (touchEndX < touchStartX) {
+                            autoClick("next")
+                        }
+
+                        if (touchEndX > touchStartX) {
+                            autoClick("prev")
+                        }
+                    }
+
+                    currentCard.addEventListener('touchstart', handleTouchStart, false);        
+                    currentCard.addEventListener('touchend', handleTouchEnd, false);
 
                 } else {
 
