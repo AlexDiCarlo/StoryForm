@@ -12,8 +12,10 @@ let checkLocalStorage = function() {
                 icon.style.order = storyOrder[id]
             }
         } else {
-            console.log("Checking")
             localStorage.setItem("nqeStoryOrder", "{}")
+            storyIcons.forEach(function(icon){  
+                icon.removeAttribute("data-story-viewed")
+            })
         }
     }
 }
