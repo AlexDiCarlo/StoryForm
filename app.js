@@ -294,9 +294,11 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                             video.currentTime = 0;
                             video.play();
                         }
+                        console.log("A")
                         currentCard.setAttribute('data-remaining-time',"0");
                         currentProgressBar.querySelector('div').style.width = (0)*100 + "%";
                         clearInterval(interval);
+                        console.log(interval)
                         interval = setInterval(() => { startAutoPlay()},100);
                         active = true;
                     } else {
@@ -432,6 +434,7 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                 } else {
 
                     currentCard.addEventListener('click',(e) => {
+                        console.log("C")
                         if (currentCard.classList.contains("mainImage")) {
                             let video = currentCard.querySelector("video")
                             let product = currentCard.querySelector('[data-nqe-card-type="product"], [data-nqe-card-type="content"], [data-nqe-card-type="polling"]')
