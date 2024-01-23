@@ -49,10 +49,10 @@
       display: block;
       flex-grow: 0;
       flex-shrink: 0;
-      flex-basis: 100%;
       touch-action: none; /* IE11 */
       -webkit-user-select: none; /* Safari */
       user-select: none; /* Standard */
+      width: 100%!important;
     }
     
     img {
@@ -91,24 +91,3 @@
 }
 .progress > div {background-color:black;     width:0%;    height:4px;   transition:width 100ms linear; /* note this line */}
 
-
-
-
-/* Rotate Testing  */
-
-[data-nqe-story-container] {
-  position: relative;
-  transform-style: preserve-3d;
-  transform: rotateY(0deg);
-  transition: transform 1s;
-}
-
-[data-card-order] {
-  transform-style: preserve-3d;
-  position: absolute;
-  width: 100%!important;
-  height: 100%!important;
-  pointer-events: none;
-  top: 0;
-  bottom: 0;
-}

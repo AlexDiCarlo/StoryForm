@@ -323,6 +323,7 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                 let video = currentCard.querySelector("video") 
                 if (video != undefined)  {video.play()}
                 startPauseButtonContainer.classList.add("pause")
+                clearInterval(interval)
                 interval = setInterval(() => { startAutoPlay()},100);
                 active = true;
             })
@@ -369,15 +370,19 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                     });
                     
                     currentCard.addEventListener("touchend", (e) => {
-                
                         if (currentCard.classList.contains("mainImage")) {
                             let video = currentCard.querySelector("video")
+                            let product = currentCard.querySelector('[data-nqe-card-type="product"]')
                             if (active == false){
                                 if (video != undefined)  {video.play()}
+                                if (product != undefined)  {
+
+                                } else {
                                 startPauseButtonContainer.classList.add("pause")
                                 clearInterval(interval);
                                 interval = setInterval(() => { startAutoPlay()},100);
                                 active = true;
+                                }
                             }
                         } 
                     });
