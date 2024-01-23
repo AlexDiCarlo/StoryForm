@@ -8,6 +8,7 @@ let checkLocalStorage = function() {
         if (storyIcons.length !== Object.keys(storyOrder).length) {    
             for (let id in storyOrder) {
                 let icon = document.querySelector(`[data-nqe-story-icon="${id}"]`)
+                icon.classList.add("story-viewed")
                 icon.style.order = storyOrder[id]
             }
         } else {
@@ -301,6 +302,7 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                     } else {
                         let newOrder = 100 + iconCounter
                         currentIcon.style.order = `${newOrder.toString()}`
+                        currentIcon.classList.add("story-viewed")
                         let orderObject = JSON.parse(localStorage.getItem("nqeStoryOrder"))
                         orderObject[`${currentStoryID.toString()}`] = `${newOrder.toString()}`
                         localStorage.setItem("nqeStoryOrder", JSON.stringify(orderObject))
