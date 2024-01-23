@@ -86,8 +86,13 @@
   z-index: 1;
   background-color: white;
   margin: auto;
-
-
 }
-.progress > div {background-color:black;     width:0%;    height:4px;   transition:width 100ms linear; /* note this line */}
 
+.progress > div {background-color:black;     width:0%;   height:4px;   transition:width 100ms linear; /* note this line */}
+
+@media only screen and (max-width: 767px) {
+  .progress {
+    height: 6px;
+    border: .5px solid white;
+  }
+}

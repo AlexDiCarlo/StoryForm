@@ -374,7 +374,7 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                     currentCard.addEventListener("touchend", (e) => {
                         if (currentCard.classList.contains("mainImage")) {
                             let video = currentCard.querySelector("video")
-                            let product = currentCard.querySelector('[data-nqe-card-type="product"]')
+                            let product = currentCard.querySelector('[data-nqe-card-type="product"], [data-nqe-card-type="content"]')
                             if (active == false){
                                 if (video != undefined)  {video.play()}
                                 if (product != undefined)  {
@@ -434,6 +434,7 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                     currentCard.addEventListener('click',(e) => {
                         if (currentCard.classList.contains("mainImage")) {
                             let video = currentCard.querySelector("video")
+                            let product = currentCard.querySelector('[data-nqe-card-type="product"], [data-nqe-card-type="content"]')
                             if (active){
                                 if (video != undefined)  {video.pause()}
                                 startPauseButtonContainer.classList.remove("pause")
@@ -441,10 +442,14 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                                 active = false;
                             } else {
                                 if (video != undefined)  {video.play()}
+                                if (product != undefined)  {
+
+                                } else {
                                 startPauseButtonContainer.classList.add("pause")
                                 clearInterval(interval);
                                 interval = setInterval(() => { startAutoPlay()},100);
                                 active = true;
+                                }
                             }
                         }
                     });
