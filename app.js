@@ -374,7 +374,7 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                     currentCard.addEventListener("touchend", (e) => {
                         if (currentCard.classList.contains("mainImage")) {
                             let video = currentCard.querySelector("video")
-                            let product = currentCard.querySelector('[data-nqe-card-type="product"], [data-nqe-card-type="content"]')
+                            let product = currentCard.querySelector('[data-nqe-card-type="product"], [data-nqe-card-type="content"], [data-nqe-card-type="polling"]')
                             if (active == false){
                                 if (video != undefined)  {video.play()}
                                 if (product != undefined)  {
@@ -434,7 +434,7 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                     currentCard.addEventListener('click',(e) => {
                         if (currentCard.classList.contains("mainImage")) {
                             let video = currentCard.querySelector("video")
-                            let product = currentCard.querySelector('[data-nqe-card-type="product"], [data-nqe-card-type="content"]')
+                            let product = currentCard.querySelector('[data-nqe-card-type="product"], [data-nqe-card-type="content"], [data-nqe-card-type="polling"]')
                             if (active){
                                 if (video != undefined)  {video.pause()}
                                 startPauseButtonContainer.classList.remove("pause")
@@ -467,3 +467,23 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
 
 
 
+document.addEventListener('DOMContentLoaded', (event) => {
+    const swatches = document.querySelectorAll('.swatch');
+
+    swatches.forEach(swatch => {
+      swatch.addEventListener('click', (event) => {
+        console.log(`You clicked on ${event.target.textContent}`);
+      });
+    });
+  });
+
+
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const answers = document.querySelectorAll('.poll-answer');
+
+    answers.forEach(answer => {
+      answer.addEventListener('click', (event) => {
+        console.log(`You clicked on ${event.target.textContent}`);
+      });
+    });
+  });
