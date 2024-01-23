@@ -298,7 +298,6 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                         currentCard.setAttribute('data-remaining-time',"0");
                         currentProgressBar.querySelector('div').style.width = (0)*100 + "%";
                         clearInterval(interval);
-                        console.log(interval)
                         interval = setInterval(() => { startAutoPlay()},100);
                         active = true;
                     } else {
