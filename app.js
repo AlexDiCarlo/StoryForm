@@ -8,7 +8,6 @@ let checkLocalStorage = function() {
         if (storyIcons.length !== Object.keys(storyOrder).length) {    
             for (let id in storyOrder) {
                 let icon = document.querySelector(`[data-nqe-story-icon="${id}"]`)
-                icon.setAttribute("data-story-viewed", "true")
                 icon.style.order = storyOrder[id]
             }
         } else {
@@ -51,8 +50,7 @@ storyButtons.forEach(function (storyButton) {
     if (nextIcon != undefined && nextIcon.getAttribute("data-story-viewed") != "true" ) {
         nextIcon.click()
     } else {
-        let allIcons = Array.from(currentIcon.parentNode.querySelectorAll("[data-nqe-story-icon]:not([data-story-viewed='true'])"))
-        
+        let allIcons = Array.from(currentIcon.parentNode.querySelectorAll("[data-nqe-story-icon]:not([data-story-viewed='true'])"))  
         if (allIcons != undefined && allIcons.length > 0) {
             for (let i = 0; i <= allIcons.length; i++) {
                 if (allIcons[i].getAttribute("data-story-viewed") != "true" ) {
