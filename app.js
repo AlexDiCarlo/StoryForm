@@ -291,8 +291,7 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                         updateOrder(buttonCounter, "prev")
                     } else if (direction == "prev" && buttonCounter == 0) {
                         let currentIcon = document.querySelector(`[data-nqe-story-icon="${currentStoryID}"]`)
-                        // let previousIcon = currentIcon.previousElementSibling.style.order
-
+                        let previousIcon = currentIcon.previousElementSibling
                         if (video != undefined)  {
                             video.currentTime = 0;
                             video.play();
@@ -300,10 +299,13 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                         currentCard.setAttribute('data-remaining-time',"0");
                         currentProgressBar.querySelector('div').style.width = (0)*100 + "%";
                         setTimeout(() => { 
-                            clearInterval(interval);
-                            interval = setInterval(() => { startAutoPlay()},100);
-                            active = true;
-                        },1);    
+                            reset() 
+                            storyContainer.classList.add("hidden")
+                            storyContainer.classList.remove("nql-show-fast")  
+                            if (previousIcon != undefined) { 
+                                previousIcon.click()    
+                            }
+                        },1); 
                     } else {
                         let newOrder = 100 + iconCounter
                         currentIcon.style.order = `${newOrder.toString()}`
