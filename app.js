@@ -290,16 +290,20 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
                         updateCardOrder(currentCard, direction, currentProgressBar)
                         updateOrder(buttonCounter, "prev")
                     } else if (direction == "prev" && buttonCounter == 0) {
+                        let currentIcon = document.querySelector(`[data-nqe-story-icon="${currentStoryID}"]`)
+                        // let previousIcon = currentIcon.previousElementSibling.style.order
+
                         if (video != undefined)  {
                             video.currentTime = 0;
                             video.play();
                         }
-                        console.log("A")
                         currentCard.setAttribute('data-remaining-time',"0");
                         currentProgressBar.querySelector('div').style.width = (0)*100 + "%";
-                        clearInterval(interval);
-                        interval = setInterval(() => { startAutoPlay()},100);
-                        active = true;
+                        setTimeout(() => { 
+                            clearInterval(interval);
+                            interval = setInterval(() => { startAutoPlay()},100);
+                            active = true;
+                        },1);    
                     } else {
                         let newOrder = 100 + iconCounter
                         currentIcon.style.order = `${newOrder.toString()}`
