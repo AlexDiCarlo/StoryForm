@@ -343,6 +343,7 @@ let startStoryForm = function(storyContainer, status, autoplay = "true") {
             // Working //
             let exitButton = storyContainer.querySelector("[data-nqe-exitButton]")
             exitButton.addEventListener("click", function(){
+                startPauseButtonContainer.classList.add("pause")
                 let currentCard = container.querySelector(".mainImage")
                 let video = currentCard.querySelector("video")
                 if (video != undefined)  {
